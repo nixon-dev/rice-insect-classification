@@ -1,0 +1,82 @@
+{% extends "base.html" %} 
+
+{% block title %}
+
+<title>Settings - ITRI</title>
+
+{% endblock %}
+
+
+{% block content %}
+
+{% include "sidenav.html" %}
+
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>Settings</h1>
+  </div>
+
+  <div class="container">
+    <div class="card">
+      <div class="card-body">
+        <br>
+        {% if error %}
+        <div class="alert alert-danger" role="alert">
+          {{ error }}
+        </div>
+        {% elif success %}
+        <div class="alert alert-success" role="alert">
+          {{ success }}
+        </div>
+        {% endif %}
+        {% if request.args.get('success') %}
+        <div class="alert alert-success" role="alert">
+          {{ request.args.get('success') }}
+        </div>
+        {% elif request.args.get('error') %}
+        <div class="alert alert-danger" role="alert">
+          {{ request.args.get('error') }}
+        </div>
+        {% endif %}
+        <form action="{{ url_for('views.settings') }}" method="POST">
+          <div class="row mb-3">
+            <div class="col-sm-12">
+              <label class="col-form-label">First Name</label>
+              <input type="text" class="form-control" name="f_name" value="{{ f_name }}">
+            </div>
+            <div class="col-sm-12">
+              <label class="col-form-label">Middle Name</label>
+              <input type="text" class="form-control" name="m_name" value="{{ m_name }}">
+            </div>
+            <div class="col-sm-12">
+              <label class="col-form-label">Last Name</label>
+              <input type="text" class="form-control" name="l_name" value="{{ l_name }}">
+            </div>
+            <div class="col-sm-12 d-none">
+              <label class="col-form-label">Email</label>
+              <input type="email" class="form-control" name="email" value="{{ email }}">
+            </div>
+            <div class="col-sm-12">
+              <label class="col-form-label">Password</label>
+              <input type="password" class="form-control" name="password1" value="{{ password }}">
+            </div>
+            <div class="col-sm-12">
+              <label class="col-form-label">Confirm Password</label>
+              <input type="password" class="form-control" name="password2" value="{{ password }}">
+            </div>
+
+          </div>
+          <button type="submit" class="btn btn-outline-primary">Update</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+
+
+</main>
+
+
+
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends "base.html" %} 
+
+{% block title %}
+
+<title>Add Users - ITRI</title>
+
+{% endblock %}
+
+
+{% block content %}
+
+{% include "sidenav.html" %}
+
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>Add Administrator</h1>
+
+
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <span class="invisible">NANASHI WAS HERE</span>
+          {% if error %}
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ error }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          {% elif success %}
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ success }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          {% endif %}
+          <form action="{{ url_for('views.addusers') }}" method="POST" class="validate">
+            <div class="mb-3">
+              <label for="fname" class="form-label">First Name</label>
+              <input type="text" class="form-control" name="fname" required></input>
+            </div>
+
+            <div class="mb-3">
+              <label for="mname" class="form-label">Middle Name</label>
+              <input type="text" class="form-control" name="mname" required></input>
+            </div>
+
+            <div class="mb-3">
+              <label for="lname" class="form-label">Last Name</label>
+              <input type="text" class="form-control" name="lname" required></input>
+            </div>
+
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" class="form-control" name="email" required></input>
+            </div>
+
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input type="password" class="form-control" name="password" required></input>
+            </div>
+
+
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+
+
+{% endblock %}

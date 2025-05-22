@@ -1,0 +1,127 @@
+<header id="header" class="header fixed-top d-flex align-items-center">
+  <div class="d-flex align-items-center justify-content-between">
+    <a href="/" class="logo d-flex align-items-center">
+      <!-- <img src="assets/img/logo.png" alt="" /> -->
+      <span class="d-none d-lg-block">{% if 'title' in session %} {{ session['title'] }} {%
+        endif %}</span>
+    </a>
+    <i class="bi bi-list toggle-sidebar-btn"></i>
+  </div>
+
+  <nav class="header-nav ms-auto">
+    <ul class="d-flex align-items-center">
+      <li class="nav-item dropdown pe-3">
+        <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+          <span class="d-none d-md-block dropdown-toggle ps-2">
+            {% if 'fullname' in session %} {{ session['fullname'] }} {%
+            endif %}</span>
+        </a>
+
+        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+          <li class="dropdown-header">
+            <h6>
+              {% if 'fullname' in session %} {{ session['fullname'] }} {%
+              endif %}
+            </h6>
+            <span>{% if 'role' in session %} {{ session['role'] }} {% endif
+              %}</span>
+          </li>
+          <li>
+            <hr class="dropdown-divider" />
+          </li>
+          <li>
+            <a class="dropdown-item d-flex align-items-center" href="/logout">
+              <i class="bi bi-box-arrow-right"></i>
+              <span>Sign Out</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+
+
+<!-- ======= Sidebar ======= -->
+<aside id="sidebar" class="sidebar">
+  <ul class="sidebar-nav" id="sidebar-nav">
+
+    <!-- Dashboard -->
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="/dashboard">
+        <i class="bi bi-search"></i>
+        <span>Identify</span>
+      </a>
+    </li>
+
+    <!-- Insect Management -->
+    <li class="nav-heading">Insect Management</li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="/insects">
+        <i class="bi bi-bug"></i>
+        <span>Insects</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="/history">
+        <i class="bi bi-clock-history"></i>
+        <span>History</span>
+      </a>
+    </li>
+    <!-- {% if session['role'] == 'Administrator' %}
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="/requests">
+        <i class="bi bi-table"></i>
+        <span>Request</span>
+      </a>
+    </li>
+    {% endif %} -->
+
+    <!-- Settings -->
+    <li class="nav-heading">Settings</li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="/settings">
+        <i class="bi bi-gear"></i>
+        <span>Account Settings</span>
+      </a>
+    </li>
+
+    {% if session['role'] == 'Administrator' %}
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="/tutorial">
+        <i class="bi bi-gear-wide-connected"></i>
+        <span>Tutorial</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="{{url_for('views.model')}}">
+        <i class="bi bi-gear"></i>
+        <span>Model Settings</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="{{url_for('views.users')}}">
+        <i class="bi bi-people"></i>
+        <span>Users</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="/websettings">
+        <i class="bi bi-gear-wide-connected"></i>
+        <span>Web Setting</span>
+      </a>
+    </li>
+    {% endif %}
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="/logout">
+        <i class="bi bi-box-arrow-right"></i>
+        <span>Logout</span>
+      </a>
+    </li>
+  </ul>
+</aside>
+<!-- End Sidebar-->

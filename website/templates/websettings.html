@@ -1,0 +1,167 @@
+{% extends "base.html" %} 
+
+{% block title %}
+
+<title>Web Settings - ITRI</title>
+
+{% endblock %}
+
+
+{% block content %}
+
+{% include "sidenav.html" %}
+
+<head>
+  <style>
+    #preloader {
+      display: none;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    #progress-container {
+      display: none;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>Web Settings</h1>
+  </div>
+
+  <div id="alertContainer"></div>
+
+
+  <div class="row">
+    <div class="col-lg-8">
+      <br>
+      {% if error %}
+      <div class="alert alert-danger" role="alert">
+        {{ error }}
+      </div>
+      {% elif success %}
+      <div class="alert alert-success" role="alert">
+        {{ success }}
+      </div>
+      {% endif %}
+      {% if request.args.get('success') %}
+      <div class="alert alert-success" role="alert">
+        {{ request.args.get('success') }}
+      </div>
+      {% elif request.args.get('error') %}
+      <div class="alert alert-danger" role="alert">
+        {{ request.args.get('error') }}
+      </div>
+      {% endif %}
+
+      <form action="{{ url_for('views.websettings') }}" method="POST">
+        <div class="row mb-3">
+          <div class="col-sm-12">
+            <label class="col-form-label">Title</label>
+            <input type="text" class="form-control" name="title" value="{{ title }}">
+          </div>
+          <div class="col-sm-12">
+            <label class="col-form-label">Welcome Title</label>
+            <input type="text" class="form-control" name="w_title" value="{{ w_title }}">
+          </div>
+          <div class="col-sm-12">
+            <label class="col-form-label">Welcome Subtitle</label>
+            <input type="text" class="form-control" name="w_subtitle" value="{{ w_subtitle }}">
+          </div>
+          <div class="col-sm-12">
+            <label class="col-form-label">About Us</label>
+            <textarea class="form-control" name="about_us">{{ about_us }}</textarea>
+          </div>
+          <div class="col-sm-12">
+            <label class="col-form-label">Phone</label>
+            <input type="number" class="form-control" name="phone" value="{{ phone }}">
+          </div>
+          <div class="col-sm-12">
+            <label class="col-form-label">Email</label>
+            <input type="email" class="form-control" name="email" value="{{ email }}">
+          </div>
+        </div>
+        <div class="text-center">
+          <button type="submit" class="btn btn-outline-primary">Update</button>
+        </div>
+      </form>
+    </div>
+    <div class="col-lg-4">
+      <form id="uploadForm" action="/update_bg" method="POST" enctype="multipart/form-data">
+        <label class="col-form-label">Background 1</label><br>
+        <!-- <small>Note: Upload the best.pt from trained dataset</small> -->
+        <input type="file" class="form-control m-3" name="bg1" accept="image/jpeg, image/jpg, image/png">
+        <label class="col-form-label">Background 2</label><br>
+        <input type="file" class="form-control m-3" name="bg2" accept="image/jpeg, image/jpg, image/png">
+        <div class="text-center">
+          <button type="submit" class="btn btn-outline-primary w-50">Update BG</button>
+        </div>
+        <div id="progress-container">
+          <div class="progress">
+            <div id="progress-bar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+              style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+          <p id="progress-text" class="text-center mt-2">0%</p>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('uploadForm');
+    const progressContainer = document.getElementById('progress-container');
+    const progressBar = document.getElementById('progress-bar');
+    const progressText = document.getElementById('progress-text');
+
+    form.addEventListener('submit', function (event) {
+      event.preventDefault(); // Prevent the default form submission
+
+      progressContainer.style.display = 'block';
+
+      const formData = new FormData(form);
+      const xhr = new XMLHttpRequest();
+
+      xhr.open('POST', form.action, true);
+
+      xhr.upload.addEventListener('progress', function (e) {
+        if (e.lengthComputable) {
+          const percentComplete = Math.round((e.loaded / e.total) * 100);
+          progressBar.style.width = percentComplete + '%';
+          progressBar.setAttribute('aria-valuenow', percentComplete);
+          progressText.textContent = percentComplete + '%';
+        }
+      });
+
+      xhr.onload = function () {
+        if (xhr.status === 200) {
+          const alertContainer = document.getElementById('alertContainer');
+          alertContainer.innerHTML = `
+              <div class="alert alert-success alert-dismissible fade show" role="alert">
+                Upload successful!
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>`;
+        } else {
+          const alertContainer = document.getElementById('alertContainer');
+          alertContainer.innerHTML = `
+              <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                An error occurred during the upload.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>`;
+        }
+
+        progressContainer.style.display = 'none';
+        progressBar.style.width = '0%';
+        progressText.textContent = '0%';
+      };
+
+      xhr.send(formData);
+    });
+  </script>
+
+</main>
+
+
+
+{% endblock %}

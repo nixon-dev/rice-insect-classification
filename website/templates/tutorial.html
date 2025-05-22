@@ -1,0 +1,100 @@
+{% extends "base.html" %} 
+
+{% block title %}
+
+<title>Tutorial - ITRI</title>
+
+{% endblock %}
+
+
+{% block content %}
+
+{% include "sidenav.html" %}
+
+
+<main id="main" class="main">
+
+
+  <div class="pagetitle">
+    <h1>How to train an Insect Identification Model</h1>
+  </div>
+
+  <div class="col-md-12">
+    <ul class="list-unstyled">
+      <li><strong>1. Organize your data:</strong>
+        <ul>
+          <li>
+            Create a folder named "dataset".
+          </li>
+          <li>
+            Inside "dataset", create two subfolders: "train" and "val". These will hold your training and validation
+            data.
+          </li>
+          <li>
+            Within "train" and "val", create folders for each insect class you want to identify. Make sure the folder
+            names are identical in both "train" and "val".</li>
+          <li>
+            Place your insect images inside their corresponding class folders. For example, if you have images of
+            butterflies and bees, you would have folders named "butterflies" and "bees" inside both "train" and "val".
+          </li>
+
+        </ul>
+      </li>
+
+      <li><strong>2. Prepare your data</strong>
+        <ul>
+          <li>
+            Compress the "dataset" folder into a zip file. This step might be required depending on the platform you use
+            to train your model.
+          </li>
+        </ul>
+      </li>
+
+      <li><strong>3. Train your model:</strong>
+        <ul>
+          <li>
+            Open <a href="https://colab.research.google.com/drive/1l8Ch8swhoZaDhPdCFZfUeaxukQ-b9A-t?usp=sharing"
+              class="btn btn-sm btn-success" target="_blank">Google Collab</a> notebook.
+          </li>
+          <li>
+            Upload your "dataset.zip" file (if you compressed it) to the Colab notebook environment.
+          </li>
+          <li>
+            Follow the instructions in the Colab notebook to train your insect identification model using your prepared
+            dataset.
+          </li>
+        </ul>
+      </li>
+
+      <li><strong>4. Upload your model</strong>
+        <ul>
+          <li>
+            Open <a href="/model" class="btn btn-sm btn-primary" target="_blank">Model Setting</a> to upload your "best.pt" you downloaded from the Google Colab.
+          </li>
+          <li>And you're done!</li>
+        </ul>
+
+      </li>
+    </ul>
+
+  </div>
+
+  <div class="pagetitle d-flex justify-content-center">
+    <h1>Video Tutorial</h1>
+  </div>
+  <div class="col-md-12 d-flex justify-content-center">
+
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/02OZWdsDxsQ?si=LtynpgqalYHP14yO"
+      title="YouTube video player" frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+    </iframe>
+  </div>
+
+
+</main>
+
+
+
+
+{% endblock %}

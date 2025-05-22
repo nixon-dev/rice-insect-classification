@@ -1,0 +1,22 @@
+www.itri-agri.site {
+        redir https://itri-agri.site{uri}
+}
+
+itri-agri.site {
+        reverse_proxy localhost:8000
+        encode zstd gzip
+
+        # Default Cache-Control header
+        header {
+                Cache-Control "public, max-age=86400"
+        }
+
+
+        # Disable caching for /history
+        @noCacheHistory path /history
+        header @noCacheHistory {
+                Cache-Control "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0"
+                Pragma "no-cache"
+                Expires "0"
+        }
+}

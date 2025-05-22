@@ -1,0 +1,92 @@
+{% extends "base.html" %} 
+
+{% block title %}
+
+<title>Insect Details - ITRI</title>
+
+{% endblock %}
+
+
+{% block content %}
+
+{% include "sidenav.html" %}
+
+
+<main id="main" class="main">
+
+
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-lg-9">
+          <h5 class="card-title">{{ insect['insect_name']}}</h5>
+
+          <h5>Description</h5>
+          <p>{{ insect['insect_description'] }} </p>
+
+          <h5>Treatment</h5>
+          <p>{{ insect['insect_treatment'] }} </p>
+        </div>
+        <div class="col-lg-3">
+          <div class="card-title">
+            {% if insect['insect_image'] != None %}
+            <img src="data:image/jpeg;base64,{{ insect['insect_image'] }}" alt="Insect Image"
+              style="height:auto; width: 100%; object-fit: cover;" loading="lazy">
+            {% else %}
+            {% endif %}
+          </div>
+        </div>
+
+        <div clas="col-lg-12">
+          <div class="row insect-container">
+
+            {% for picture in pictures%}
+            <div class="col-sm-4 insect-item {% if loop.index > 3 %}d-none{% endif %} mb-3">
+              <img src="data:image/jpeg;base64,{{ picture['picture'] }}" alt="Insect Image"
+                style="height:260px; width: 100%; object-fit: cover;" loading="lazy">
+            </div>
+            {% endfor %}
+
+          </div>
+
+        </div>
+
+        <div class="col-lg-12">
+          <br>
+          <div class="d-flex justify-content-center">
+            <button type="button" id="view-more" class="btn view-more-btn btn-outline-success btn-lg">View
+              More</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+</main>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const viewMoreButton = document.getElementById('view-more');
+
+    const insectContainer = document.querySelector('.insect-container');
+
+    viewMoreButton.addEventListener('click', function () {
+      const hiddenItems = insectContainer.querySelectorAll('.insect-item.d-none');
+      const itemsToShow = Array.from(hiddenItems).slice(0, 3);
+
+      itemsToShow.forEach(item => {
+        item.classList.remove('d-none');
+      });
+
+      if (hiddenItems.length <= 3) {
+        viewMoreButton.remove();
+      }
+    });
+  });
+</script>
+
+
+
+{% endblock %}

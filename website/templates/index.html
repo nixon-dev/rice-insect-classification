@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>ITRI</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <!-- Vendor CSS Files -->
+    <link href="{{url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='vendor/bootstrap-icons/bootstrap-icons.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='vendor/aos/aos.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='vendor/glightbox/css/glightbox.min.css')}}" rel="stylesheet">
+    <!-- Main CSS File -->
+    <link href="{{url_for('static', filename='css/main.css')}}" rel="stylesheet">
+</head>
+
+<body class="index-page">
+    <header id="header" class="header d-flex align-items-center fixed-top">
+        <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+            <a href="/" class="logo d-flex align-items-center">
+                <h1 class="sitename">
+                    {% if 'title' in session %}
+                    {{ session['title'] }}
+                    {% else %}
+                    {{ title }}
+                    {% endif %}
+                </h1>
+            </a>
+            <nav id="navmenu" class="navmenu">
+                <ul>
+                    <li>
+                        <a href="#hero" class="active">Home</a>
+                    </li>
+                    <li>
+                        <a href="#about">About</a>
+                    </li>
+                    <li>
+                        <a href="#insect">Insects</a>
+                    </li>
+                    <li>
+                        {% if session['logged_in'] %}
+                        <a href="/logout">Logout</a>
+                        {% else %}
+                        <a href="/login">Login</a>
+                        {% endif %}
+                    </li>
+                </ul>
+                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+            </nav>
+        </div>
+    </header>
+    <main class="main">
+        <!-- Hero Section -->
+        <section id="hero" class="hero section dark-background">
+            <img src="{{ url_for('views.serve_image', filename='bg1.webp') }}" loading="lazy" alt="Hero Background">
+            <div class="container text-center">
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <h2>{{ w_title }}</h2>
+                        <p>{{ w_subtitle }}</p>
+                        <a href="/get-started" class="btn-get-started">Identify Now</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="about" class="about section">
+            <!-- Section Title -->
+            <div class="container section-title" data-aos="fade-up">
+                <p>
+                    <span class="description-title">
+                        About Us
+                        <br>
+                    </span>
+                </p>
+            </div>
+            <!-- End Section Title -->
+            <div class="container">
+                <div class="row gy-5">
+                    <div class="col-lg-12" data-aos="fade-up" data-aos-delay="200">
+                        <div class="row gy-4">
+                            <div class="container section-context p" data-aos="fade-up">
+                                <p style="white-space: pre-line;">
+                                    {{ about_us | safe }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="call-to-action" class="call-to-action section dark-background">
+            <img src="{{ url_for('views.serve_image', filename='bg2.webp') }}" loading="lazy" alt="CTA Background">
+            <div class="container">
+                <div class="row justify-content-center" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="col-xl-10">
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="insect" class="insect section">
+            <div class="container section-title" data-aos="fade-up">
+                <p>
+                    <span class="description-title">Insects</span>
+                </p>
+            </div>
+            <div class="container">
+                <div class="row gy-4 isotope-container mb-4" data-aos="fade-up" data-aos-delay="200">
+                    {% for insect in insects %}
+                    <!-- START -->
+                    <div class="col-lg-4 col-md-3 insect-item isotope-item {% if loop.index > 3 %}d-none{% endif %}">
+                        <img src="data:image/jpeg;base64,{{ insect['insect_image'] }}" class="img-fluid" alt=""
+                            style="height: 320px; width: 500px; object-fit: cover;" loading="lazy">
+                        <div class="insect-info">
+                            <h4>{{ insect['insect_name'] }}</h4>
+                            <p>{{ insect['insect_description'] }}</p>
+                            <a href="data:image/jpeg;base64,{{ insect['insect_image'] }}"
+                                class="glightbox preview-link">
+                                <i class="bi bi-zoom-in"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- END -->
+                    {% endfor %}
+
+                </div>
+
+                <div class="d-flex justify-content-center">
+                    <button type="button" id="view-more" class="btn view-more-btn btn-outline-success btn-lg">View
+                        More</button>
+                </div>
+            </div>
+            </div>
+        </section>
+    </main>
+    <footer id="footer" class="footer dark-background">
+        <div class="container text-center mt-4">
+            <p>
+                <hr>
+                <span>Group 5</span>
+                <strong class="px-1 sitename">Rice Insect Identification</strong>
+                <hr>
+                <strong class="px=1">Phone: {{ phone }}</strong><br />
+                <strong class="px-1">Email: {{ email }}</strong>
+            </p>
+        </div>
+    </footer>
+    <!-- Scroll Top -->
+    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center">
+        <i class="bi bi-arrow-up-short"></i>
+    </a>
+    <!-- Vendor JS Files -->
+    <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='vendor/aos/aos.js')}}"></script>
+    <script src="{{ url_for('static', filename='vendor/glightbox/js/glightbox.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='vendor/imagesloaded/imagesloaded.pkgd.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='vendor/isotope-layout/isotope.pkgd.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='vendor/swiper/swiper-bundle.min.js')}}"></script>
+    <!-- Main JS File -->
+    <script src="{{ url_for('static', filename='js/main.js')}}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const viewMoreButton = document.getElementById('view-more');
+
+            const insectContainer = document.querySelector('.isotope-container');
+
+            viewMoreButton.addEventListener('click', function () {
+                const hiddenItems = insectContainer.querySelectorAll('.insect-item.d-none');
+                const itemsToShow = Array.from(hiddenItems).slice(0, 3);
+
+                itemsToShow.forEach(item => {
+                    item.classList.remove('d-none');
+                });
+
+                if (hiddenItems.length <= 3) {
+                    viewMoreButton.remove();
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

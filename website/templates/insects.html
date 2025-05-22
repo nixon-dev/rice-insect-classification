@@ -1,0 +1,118 @@
+{% extends "base.html" %} 
+
+{% block title %}
+
+<title>Insects - ITRI</title>
+
+{% endblock %}
+
+
+{% block content %}
+
+{% include "sidenav.html" %}
+
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>Insects</h1>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <span class="invisible">NANASHI WAS HERE</span>
+
+          {% if request.args.get('success') %}
+          <div class="alert alert-success" role="alert">
+            {{ request.args.get('success') }}
+          </div>
+          {% elif request.args.get('error') %}
+          <div class="alert alert-danger" role="alert">
+            {{ request.args.get('error') }}
+          </div>
+          {% endif %}
+
+          <table id="insect" class="table table-striped">
+            {% if session['role'] == 'Administrator' %}
+            <div class="col-lg-12">
+              <a href="{{ url_for('views.addinsect') }}" class="btn btn-outline-primary"><i class="bi bi-plus"></i> Add
+                Insect</a>
+            </div>
+            {% endif %}
+
+            <thead>
+              <tr>
+                <th scope="col">Insect Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Treatment</th>
+                <th scope="col">Image</th>
+                <th scope="col">View</th>
+                {% if session['role'] == 'Administrator' %}
+                <th scope="col">Delete</th>
+                {% endif %}
+              </tr>
+            </thead>
+            <tbody>
+              {% for insect in insects %}
+              <tr>
+                <td class="col-md-2">{{ insect['insect_name'] }}</td>
+                <td class="col-md-3">{{ insect['insect_description'] | truncate(100, True) }}</td>
+                <td class="col-md-3">{{ insect['insect_treatment'] | truncate(100, True) }}</td>
+                <td class="col-md-2">
+                  {% if insect['insect_image'] != None %}
+                  <img src="data:image/jpeg;base64,{{ insect['insect_image'] }}" alt="Insect Image"
+                    style="height:100px; width: 100px; object-fit: cover;" loading="lazy">
+                  {% else %}
+                  N/A
+                  {% endif %}
+                </td>
+                {% if session['role'] == 'Administrator' %}
+                <td class="col-md-1 text-center">
+                  <a href="{{url_for('views.insectdetailed')}}?id={{ insect['insect_id'] }}" class="text-primary">
+                    <i class="bi bi-search"></i>
+                  </a>
+                </td>
+                {% else %}
+                <td class="col-md-1 text-center">
+                  <a href="{{url_for('views.insectdetail')}}?id={{ insect['insect_id'] }}" class="text-primary">
+                    <i class="bi bi-search"></i>
+                  </a>
+                </td>
+                {% endif %}
+
+                {% if session['role'] == 'Administrator' %}
+                <td class="col-md-1 text-center"><a
+                    href="{{url_for('views.deleteinsect')}}?id={{ insect['insect_id'] }}" class="text-danger"><i
+                      class="bi bi-trash"></i>
+                  </a></td>
+                {% endif %}
+
+              </tr>
+              {% else %}
+              <tr class="text-center">
+                <td colspan="5">No Records Found</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script src="{{ url_for('static', filename='js/jquery-3.7.1.js')}}"></script>
+<script src="{{ url_for('static', filename='js/dataTables.js')}}"></script>
+
+<script>
+  new DataTable('#insect', {
+    search: {
+      return: true
+    },
+    responsive: true
+  });
+
+</script>
+
+{% endblock %}

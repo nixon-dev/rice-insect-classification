@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}
+
+<title>Add Pictures - ITRI</title>
+
+{% endblock %}
+
+
+{% block content %}
+
+{% include "sidenav.html" %}
+
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>Add Picture</h1>
+
+
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <span class="invisible">NANASHI WAS HERE</span>
+          {% if error %}
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ error }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          {% elif success %}
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ success }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          {% endif %}
+
+          <form action="{{ url_for('views.addpictures') }}" method="POST" enctype="multipart/form-data" class="validate"
+            nonvalidation>
+            <div class="mb-3">
+              <input type="text" class="form-control d-none" value="{{ id }}" name="insect_id" required></input>
+            </div>
+
+            <div class="mb-3">
+              <label for="insectImage" class="form-label">Insect Image</label>
+              <input class="form-control" type="file" name="insectImage" id="insectImage" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+{% endblock %}

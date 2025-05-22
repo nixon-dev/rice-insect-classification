@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}
+
+<title>Identify Insect - ITRI</title>
+
+{% endblock %}
+
+
+{% block content %}
+
+{% include "sidenav.html" %}
+
+
+<main id="main" class="main">
+
+
+  <div class="pagetitle">
+    <h1>Identify Insect</h1>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Upload an image of the insect for identification</h5>
+          <form id="upload-form" action="/upload" method="POST" enctype="multipart/form-data">
+            <div class="mb-3">
+              <label for="formFile" class="form-label">
+                <small class="text-muted">Supported insect identifications: Brown Planthopper, Green Leafhopper, Rice
+                  Black Bug, Rice Bug, and Stem Borers.</small><br>
+                <small class="text-muted">Note: This system is specifically designed for insect identification. Please
+                  upload a clear, non-blurry image for accurate results.</small>
+              </label>
+              <input class="form-control border border-dark" type="file" id="file-input" name="file" required
+                accept="image/png, image/jpeg, image/jpg">
+            </div>
+            <div class="mb-3 form-check text-center">
+              <input type="number" class="form-control" id="useridText" name="userId" value="{{ session['id'] }}"
+                style="display: none">
+              <button type="submit" class="btn btn-outline-primary w-50">Upload</button>
+            </div>
+            <div id="pre" class="text-center mt-3" style="display: none;">
+              <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              <p class="mt-2">Uploading, please wait...</p>
+            </div>
+          </form>
+
+
+          <div class="col-lg-12 d-flex justify-content-center">
+
+          </div>
+
+
+
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+</main>
+
+<script>
+  document.getElementById('upload-form').addEventListener('submit', function (e) {
+    // Show the preloader
+    document.getElementById('pre').style.display = 'block';
+
+    // Disable the upload button to prevent multiple submissions
+    const submitButton = document.getElementById('upload-btn');
+    submitButton.disabled = true;
+  });
+</script>
+
+
+
+{% endblock %}

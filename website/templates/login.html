@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Login - ITRI</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <!-- Vendor CSS Files -->
+    <link href="{{url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='vendor/bootstrap-icons/bootstrap-icons.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='vendor/aos/aos.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='vendor/glightbox/css/glightbox.min.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='vendor/swiper/swiper-bundle.min.css')}}" rel="stylesheet">
+    <!-- Main CSS File -->
+    <link href="{{url_for('static', filename='css/main.css')}}" rel="stylesheet">
+</head>
+
+<body class="login-page">
+    <header id="header" class="header d-flex align-items-center fixed-top">
+        <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+            <a href="/" class="logo d-flex align-items-center">
+                <h1 class="sitename">{% if 'title' in session %}
+                    {{ session['title'] }}
+                    {% else %}
+                    {{ title }}
+                    {% endif %}</h1>
+            </a>
+            <nav id="navmenu" class="navmenu">
+                <ul>
+                    <li>
+                        <a href="/#hero" class="active">Home</a>
+                    </li>
+                    <li>
+                        <a href="/#about">About</a>
+                    </li>
+                    <li>
+                        <a href="/#insect">Insects</a>
+                    </li>
+                    <li>
+                        <a href="/login#signin">Login</a>
+                    </li>
+                </ul>
+                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+            </nav>
+        </div>
+    </header>
+    <main class="main">
+        <section id="signin" class="hero section dark-background">
+            <img src="{{ url_for('views.serve_image', filename='bg1.webp') }}" alt="Hero Background">
+            <div class="container" data-aos="fade-up" data-aos-delay="100">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-header text-center">
+                                <h2 class="text-success">Login</h2>
+                                {% if error %}
+                                <div class="alert alert-danger" role="alert">
+                                    {{ error }}
+                                </div>
+                                {% elif success %}
+                                <div class="alert alert-success" role="alert">
+                                    {{ success }}
+                                </div>
+                                {% endif %}
+                                {% if request.args.get('success') %}
+                                <div class="alert alert-success" role="alert">
+                                    {{ request.args.get('success') }}
+                                </div>
+                                {% elif request.args.get('error') %}
+                                <div class="alert alert-danger" role="alert">
+                                    {{ request.args.get('error') }}
+                                </div>
+                                {% endif %}
+
+                            </div>
+                            <div class="card-body p-5">
+                                <form action="{{ url_for('auth.login') }}" method="POST">
+                                    <div class="mb-3">
+                                        <label for="emailText" class="form-label">Email address</label>
+                                        <input type="email" class="form-control border border-dark" id="emailText"
+                                            aria-describedby="emailHelp" name="emailText" required>
+                                    </div>
+                                    <div class="mb-1">
+                                        <label for="exampleInputPassword1" class="form-label">Password</label>
+                                        <input type="password" class="form-control border border-dark"
+                                            name="passwordText" id="passwordText" required>
+                                    </div>
+                                    <div class="mb-3 form-check text-center">
+                                        <button type="submit" class="w-75 btn-login" name="loginBtn"
+                                            id="loginBtn">Login</button>
+                                    </div>
+                                </form>
+                                <div class="col-sm-12 row">
+                                    <div class="col-lg-6 d-flex justify-content-start">
+                                        <a class="text-primary" href="/forgot-password">Forgot Password?</a>
+                                    </div>
+                                    <div class="col-lg-6 d-flex justify-content-end">
+                                        <a class="text-primary" href="/signup">Create an Account!</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- Scroll Top -->
+    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center">
+        <i class="bi bi-arrow-up-short"></i>
+    </a>
+    <!-- Vendor JS Files -->
+    <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='vendor/php-email-form/validate.js')}}"></script>
+    <script src="{{ url_for('static', filename='vendor/aos/aos.js')}}"></script>
+    <script src="{{ url_for('static', filename='vendor/glightbox/js/glightbox.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='vendor/imagesloaded/imagesloaded.pkgd.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='vendor/isotope-layout/isotope.pkgd.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='vendor/swiper/swiper-bundle.min.js')}}"></script>
+    <!-- Main JS File -->
+    <script src="{{ url_for('static', filename='js/main.js')}}"></script>
+</body>
+
+</html>

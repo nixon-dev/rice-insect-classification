@@ -1,0 +1,56 @@
+{% extends "base.html" %} {% block title %} Rice Something {% endblock %} {%
+block content %} {% include "sidenav.html" %}
+
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>Request Insect</h1>
+
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <span class="invisible">NANASHI WAS HERE</span>
+          {% if error %}
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+              {{ error }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          {% elif success %}
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ success }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+          {% endif %}
+          
+          <form action="{{ url_for('views.insectrequest') }}" method="POST" enctype="multipart/form-data"
+            class="required" nonvalidate>
+            <div class="mb-3">
+              <label for="insectnameText" class="form-label">Insect Name</label>
+              <input type="text" class="form-control" id="insectnameText" name="insectnameText" required />
+            </div>
+
+            <div class="mb-3">
+              <label for="descriptionText" class="form-label">Description (Optional)</label>
+              <input type="text" class="form-control" id="descriptionText" name="descriptionText"/>
+            </div>
+
+            <div class="mb-3">
+              <label for="insectImage" class="form-label">Insect Image (Optional)</label>
+              <input class="form-control" type="file" name="insectImage" id="insectImage">
+            </div>
+
+            <input type="number" class="form-control" id="useridText" name="useridText" value="{{ session['id'] }}"
+              style="display: none" />
+            <div class="mb-3 text-center">
+              <button type="submit" class="btn btn-outline-primary w-25">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+{% endblock %}
