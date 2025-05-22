@@ -35,7 +35,7 @@ A Flask web application for insect image classification using a YOLOv11-trained 
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/yourusername/water-billing-automation.git
+       git clone https://github.com/nixon-dev/rice-insect-classification.git
 2. **Install requirements.txt**
 3. **After importing MySQL DB, change credentials in database/__init__.py**
   ```python
